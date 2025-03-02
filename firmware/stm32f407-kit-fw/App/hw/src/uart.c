@@ -94,7 +94,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
         HAL_StatusTypeDef hal_ret;
 
         hal_ret = HAL_UART_Receive_DMA(uart_tbl[ch].p_huart, uart_tbl[ch].q_rx_buf, UART_RX_BUF_LENGTH);
-        if (!hal_ret)
+        if (hal_ret != HAL_OK)
         {
           uart_tbl[ch].is_open = false;
         }  
@@ -104,6 +104,7 @@ bool uartOpen(uint8_t ch, uint32_t baud)
         uart_tbl[ch].q_rx.in  = uart_tbl[ch].q_rx.len - uart_tbl[ch].p_hdma_rx->Instance->NDTR;
         uart_tbl[ch].q_rx.out = uart_tbl[ch].q_rx.in;
       }
+      ret = uart_tbl[ch].is_open;
       break;
 
     default:
