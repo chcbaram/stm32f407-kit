@@ -32,5 +32,10 @@ void apMain(void)
 
       led_cnt = (led_cnt + 1) % 3;
     }
+
+    if (uartAvailable(_DEF_UART1))
+    {
+      uartPrintf(_DEF_UART1, "rx : 0x%X\n", uartRead(_DEF_UART1));
+    }
   }
 } 

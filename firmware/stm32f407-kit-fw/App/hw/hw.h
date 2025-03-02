@@ -8,7 +8,7 @@ extern "C" {
 #include "hw_def.h"
 
 #include "led.h"
-
+#include "uart.h"
 
 bool hwInit(void);
 
