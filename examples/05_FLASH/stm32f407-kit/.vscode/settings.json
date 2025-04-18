@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "usbh.h": "c",
+    "fatfs.h": "c"
+  },
+  "cortex-debug.variableUseNaturalFormat": false
+}
