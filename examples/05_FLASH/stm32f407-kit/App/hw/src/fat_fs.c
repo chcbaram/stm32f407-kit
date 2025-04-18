@@ -95,17 +95,13 @@ void cliCmd(cli_args_t *args)
       bool flash_ret;
       uint32_t file_size;
 
-      // for (;;) 
-      // {
-      //   fr = f_read(&fil, buffer, sizeof(buffer), &read_bytes);
-      // }
 
       file_size = f_size(&fil);
-
       cliPrintf("file size : %d bytes\n", file_size);
 
       flash_ret = flashErase(flash_addr, file_size);
       cliPrintf("flashErase() %s\n", flash_ret ? "OK":"FAIL");
+
 
       uint32_t read_index = 0;
       while(read_index < file_size)
