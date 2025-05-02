@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:\\work\\tools\\baram-fw-tools\\arm_toolchain\\mingw_gcc\\bin\\gcc.exe",
+            "cStandard": "c17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "windows-gcc-x86",
+            // "configurationProvider": "ms-vscode.cmake-tools",
+            "compileCommands": "build/Debug/compile_commands.json"
+        }
+    ],
+    "version": 4
+}
