@@ -69,18 +69,11 @@ bool etnetUdpOpen(const ip_addr_t *ip_addr, uint16_t port)
     {
       logPrintf("[E_] udp_bind() : %d\n", (int)err);    
     }
-
-    err = udp_connect(upcb, ip_addr, port);    
     if (err == ERR_OK)
     {
       udp_recv(upcb, etnetUdpReceiveCallback, NULL);  
       ret = true;
     }
-    else
-    {
-      logPrintf("[E_] udp_connect() : %d\n", (int)err);    
-    }
-    ret = true;
   }
 
   is_open = ret;
@@ -106,10 +99,42 @@ bool etnetUdpClose(void)
   return true;
 }
 
-uint32_t etnetUdpAvailable(void);
-bool     etnetUdpFlush(void);
-uint8_t  etnetUdpRead(uint8_t *p_data, uint32_t length);
-uint32_t etnetUdpWrite(uint8_t *p_data, uint32_t length); 
+uint32_t etnetUdpAvailable(void)
+{
+  uint32_t ret;
+
+  ret = qbufferAvailable(&rx_q);
+
+  return ret;
+}
+
+bool etnetUdpFlush(void)
+{
+  qbufferFlush(&rx_q);
+  return true;
+}
+
+bool etnetUdpRead(uint8_t *p_data, uint32_t length)
+{
+  bool ret;
+
+  ret = qbufferRead(&rx_q, p_data, length);
+  return ret;
+}
+
+uint32_t etnetUdpWrite(uint8_t *p_data, uint32_t length)
+{
+  uint32_t ret = 0;
+
+  if (!is_ip_received)
+  {
+    return 0;
+  }
+
+  ret = etnetUdpSend((const void *)p_data, length);
+
+  return ret;
+}
 
 
 bool etnetUdpSend(const void *p_data, uint32_t length)
@@ -127,7 +152,8 @@ bool etnetUdpSend(const void *p_data, uint32_t length)
     pbuf_take(p, (char*)p_data, length);
     
     /* send udp data */
-    if (udp_send(upcb, p) == ERR_OK)
+    // if (udp_send(upcb, p) == ERR_OK)
+    if (udp_sendto(upcb, p, &dest_ip_addr, dest_port) == ERR_OK)
     {
       ret = true;
     }
@@ -141,19 +167,13 @@ bool etnetUdpSend(const void *p_data, uint32_t length)
 
 void etnetUdpReceiveCallback(void *arg, struct udp_pcb *upcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
-
-  if (!is_ip_received)
-  {
-    udp_connect(upcb, addr, port);    
-  }
-
   is_ip_received = true;
   dest_ip_addr   = *addr;
   dest_port      = port;
 
   qbufferWrite(&rx_q, (uint8_t *)p->payload, p->len);
 
-  #if 0
+  #if 1
   logPrintf("[  ] udp receive\n");
   logPrintf("[  ]   len : %d\n", p->len);
   logPrintf("[  ]   ip  : %s\n", ip4addr_ntoa(addr));

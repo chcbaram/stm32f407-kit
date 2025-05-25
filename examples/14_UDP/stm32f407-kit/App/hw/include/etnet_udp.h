@@ -19,7 +19,7 @@ bool etnetUdpClose(void);
 
 uint32_t etnetUdpAvailable(void);
 bool     etnetUdpFlush(void);
-uint8_t  etnetUdpRead(uint8_t *p_data, uint32_t length);
+bool     etnetUdpRead(uint8_t *p_data, uint32_t length);
 uint32_t etnetUdpWrite(uint8_t *p_data, uint32_t length);  
 
 #endif
