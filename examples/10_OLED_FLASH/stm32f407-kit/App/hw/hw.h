@@ -11,6 +11,8 @@
 #include "i2c.h"
 #include "lcd.h"
 #include "flash.h"
+#include "button.h"
+
 
 bool hwInit(void);
 

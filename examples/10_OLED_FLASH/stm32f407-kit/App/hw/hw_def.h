@@ -31,6 +31,9 @@
 #define      HW_LCD_WIDTH           128
 #define      HW_LCD_HEIGHT          32
 
+#define _USE_HW_BUTTON
+#define      HW_BUTTON_MAX_CH       4
+
 
 #define logPrintf printf
 

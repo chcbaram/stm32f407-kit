@@ -24,7 +24,8 @@ bool hwInit(void)
   lcdSetFps(20);
 
   flashInit();
-
+  buttonInit();
+  
   return true;
 }
 
