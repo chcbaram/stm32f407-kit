@@ -78,10 +78,10 @@
           "label": "update-udp",
           "type": "shell",
           "osx": {
-            "command": "tools/mac/firm-update -m udp -f build/Debug/stm32f407-kit-fw.bin"
+            "command": "tools/mac/firm-update -m udp -p 255.255.255.255 -f build/Debug/stm32f407-kit-fw.bin"
           },
           "windows":{
-            "command": "tools/win/firm-update.exe -m udp -f build/Debug/stm32f407-kit-fw.bin"
+            "command": "tools/win/firm-update.exe -m udp 255.255.255.255 -f build/Debug/stm32f407-kit-fw.bin"
           },      
           "problemMatcher": [],
         },         
