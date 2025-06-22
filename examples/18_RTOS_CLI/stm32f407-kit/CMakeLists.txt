@@ -51,6 +51,8 @@ file(GLOB SRC_FILES CONFIGURE_DEPENDS
   App/hw/*.c
   App/hw/src/*.c   
   App/hw/src/lcd/*.c   
+
+  App/ap/modules/common/cli/*.c
 )
 
 
@@ -68,6 +70,9 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     App/common/include
     App/hw
     App/hw/include   
+
+    App/ap/modules
+    App/Ap/modules/common
 )
 
 # Add project symbols (macros)

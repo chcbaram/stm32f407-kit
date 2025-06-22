@@ -1,14 +1,11 @@
 #include "ap.h"
-
+#include "cli/cli_thread.h"
 
 
 
 
 void apInit(void)
 {
-  cliOpen(_DEF_UART1, 115200);
-  cliLogo();
-
   for (int i = 0; i < 32; i += 1)
   {
     lcdClearBuffer(black);
@@ -19,6 +16,8 @@ void apInit(void)
   }
   delay(500);
   lcdClear(black);    
+
+  cliThreadInit();
 }
 
 void apMain(void)
@@ -33,8 +32,6 @@ void apMain(void)
       pre_time = millis();
       ledToggle(_DEF_LED1);
     }
-
-    cliMain();
     delay(1);
   }
 }

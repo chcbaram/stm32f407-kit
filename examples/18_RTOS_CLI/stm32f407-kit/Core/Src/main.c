@@ -53,6 +53,18 @@ const osThreadAttr_t defaultTask_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
+/* Definitions for cli_thread */
+osThreadId_t cli_threadHandle;
+const osThreadAttr_t cli_thread_attributes = {
+  .name = "cli_thread",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for log_mutex */
+osMutexId_t log_mutexHandle;
+const osMutexAttr_t log_mutex_attributes = {
+  .name = "log_mutex"
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -64,6 +76,7 @@ static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_I2C1_Init(void);
 void StartDefaultTask(void *argument);
+extern void cliThread(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -115,6 +128,9 @@ int main(void)
 
   /* Init scheduler */
   osKernelInitialize();
+  /* Create the mutex(es) */
+  /* creation of log_mutex */
+  log_mutexHandle = osMutexNew(&log_mutex_attributes);
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
@@ -135,6 +151,9 @@ int main(void)
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of cli_thread */
+  cli_threadHandle = osThreadNew(cliThread, NULL, &cli_thread_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

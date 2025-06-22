@@ -12,6 +12,7 @@
 #include "lcd.h"
 #include "flash.h"
 #include "button.h"
+#include "log.h"
 
 
 bool hwInit(void);

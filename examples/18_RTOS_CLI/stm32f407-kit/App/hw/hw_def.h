@@ -8,6 +8,7 @@
 
 
 #define _USE_HW_FLASH
+#define _USE_HW_LOG
 
 
 #define _USE_HW_LED
@@ -35,8 +36,7 @@
 #define      HW_BUTTON_MAX_CH       4
 
 
-#define logPrintf printf
-
+void logPrintf(const char *fmt, ...);
 void delay(uint32_t ms);
 uint32_t millis(void);
 
