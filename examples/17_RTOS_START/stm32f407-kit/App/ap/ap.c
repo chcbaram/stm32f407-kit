@@ -23,7 +23,7 @@ void apInit(void)
 
 void apMain(void)
 {
-  uint32_t pre_time;
+  uint32_t pre_time;  
 
   pre_time = millis();
   while(1)
@@ -35,5 +35,6 @@ void apMain(void)
     }
 
     cliMain();
+    delay(1);
   }
 }

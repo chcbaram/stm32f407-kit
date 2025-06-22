@@ -31,7 +31,14 @@ bool hwInit(void)
 
 void delay(uint32_t ms)
 {
-  HAL_Delay(ms);
+  if (xTaskGetSchedulerState() != taskSCHEDULER_RUNNING)
+  {
+    HAL_Delay(ms);
+  }
+  else
+  {
+    osDelay(ms);
+  }
 }
 
 uint32_t millis(void)
